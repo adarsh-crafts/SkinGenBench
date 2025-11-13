@@ -12,9 +12,8 @@
 
 > 📢 Official PyTorch implementation of the **SkinGenBench**:  
 > **SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
-> N. A. Adarsh Pritam, Jeba Shiney, Sanyam Jain
-> [[Project]](#add-link-here) | [[Code]](#add-link-here)
-
+> N. A. Adarsh Pritam, Jeba Shiney, Sanyam Jain  
+[[Project]](https://github.com/adarsh-crafts/SkinGenBench) | [[Code]](https://github.com/adarsh-crafts/SkinGenBench)
 ---
 
 ## 🌟 Highlights
