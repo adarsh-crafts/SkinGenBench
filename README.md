@@ -1,79 +1,91 @@
-# Ski Gen Bench Readme inspired from PanoDiffSR
+# SkinGenBench
 
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
-[![arXiv](https://img.shields.io/badge/arXiv-preprint-red)](https://arxiv.org/abs/2507.09227v1)
-[![arXiv](https://img.shields.io/badge/highquality-paper-pink)](https://drive.google.com/file/d/1iRBodVYvZ93cZXr_cXxhw19ELZE6OPCQ/view?usp=sharing)
+[![arXiv](https://img.shields.io/badge/arXiv-preprint-red)](#add-link-here)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange)](https://pytorch.org/)
-[![pyngrok](https://img.shields.io/badge/PyNgRok-7.2%2B-yellow)](https://pypi.org/project/pyngrok/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.8%2B-orange)](https://pytorch.org/)
 
 
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/wvClGg717OZvK86TCILc0EUC5ckEHvGn/image.png" alt="PanoDiff Teaser" width="800"/>
+  <img src="images\lesion_types.svg" alt="SkinGenBench Teaser" width="400"/>
 </p>
 
-> 📢 Official PyTorch implementation of the **PanoDiff**:  
-> **PanoDiff-SR: Synthesizing Dental Panoramic Radiographs using Diffusion and Super-resolution**  
-> Sanyam	Jain, Bruna	Neves de Freitas, Andreas	Basse-O'Connor, Alexandros	Iosifidis, Ruben	Pauwels
-> [[Project]](https://github.com/s4nyam/PanoDiff) | [[Code]](https://github.com/s4nyam/PanoDiff)
+> 📢 Official PyTorch implementation of the **SkinGenBench**:  
+> **SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
+> N. A. Adarsh Pritam, Jeba Shiney, Sanyam Jain
+> [[Project]](#add-link-here) | [[Code]](#add-link-here)
 
 ---
 
 ## 🌟 Highlights
-- **Modular Design:** Two learning algorithms are used **Diffusion (DDPM, DDIM)** and **Super-Resolution (ST-transformer)** trained independently.
-- **Dataset:** Uses **five public datasets** with varying preprocessing and postprocessing inlcuding resize, rotation and crop.
-- **Diffusion:** Uses simple denoisinng diffusion probabilistic model for syntehsis with a attention-aware UNet backbone.
-- **SR:** Built upon **HAT-SR** with novel losses - pixel-wise loss (L_1), perceptual loss (L_percep), and adversarial loss (L_GAN).
-- **Real-vs-Fake Quiz:** A time-limited human in the loop activity to identify a given image as real or synthetic? Six dentists with varying experience were invited to play the quiz for 200 images (100 real and 100 fake).
+- **Systematic Evaluation:** First comprehensive comparison of preprocessing complexity impact on GANs (StyleGAN2-ADA) and Diffusion Models (DDPM) for melanoma synthesis.
+- **Dual Pipeline Design:** Two distinct preprocessing approaches - basic and advanced (with DullRazor artifact removal) - evaluated across generative architectures.
+- **Multi-Metric Assessment:** Quantitative evaluation using FID, Inception Score, and KID, combined with downstream classifier performance analysis.
+- **Clinical Focus:** Addresses the critical melanoma class imbalance (11.03% of dataset) with synthetic augmentation achieving 12-20% F1-score improvements.
+- **Comprehensive Benchmarking:** Five state-of-the-art classifiers evaluated (ResNet18, ResNet50, VGG16, ViT-B/16, EfficientNet-B0) with interpretability analysis via Grad-CAM.
 
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/zu86EKZKoUyEMb84i8AmwbSd9nsM5knc/image.png" alt="Selected Examples" width="800"/>
+  <img src="images/selected_examples.png" alt="Selected Examples" width="600"/>
   <br>
-  <em>Selected **synthetic examples** from our work that fooled most dentists.</em>
+  <em>Selected **synthetic examples** from StyleGAN2-ADA (top) and DDPM (bottom) that achieved high perceptual quality.</em>
 </p>
 
 
 ## 📊 Dataset
 
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/fNlF9Ytp2g0cGoIaGoekrZmB550SMKZh/image.png" alt="T sne" width="500"/>
+  <img src="images/reals.jpg" alt="Experimental Design" width="800"/>
 </p>
 
-T-distributed stochastic neighbor embedding (t-SNE) plot of 500 random images picked from each source dataset.
+Overall experimental design showing dual preprocessing pipelines, generative model training, synthetic data augmentation, and downstream classifier evaluation for melanoma diagnosis.
 
-**Table**: Overview of dental radiography datasets used in our study. * indicates that the dataset was recently updated with 1500 more images, but we accessed it when it had 500 images. ~ indicates varying sizes in the dataset within the given resolution range. Abbreviations: ADLD – A dual-labeled dataset, DENTEX – Dental Enumeration and Diagnosis on Panoramic X-rays, TSXK – Teeth Segmentation on dental X-ray images, TUFTS – Tufts Dental Database, USPFORP – São Paulo dataset.
+**Table**: Overview of curated dermatology dataset used in our study. The dataset combines ISIC 2025 (MLK10k) and HAM10000 sources.
 
-| Abbr.    | Images | Format | Availability | Year | Country | Resolution |
-|---|---|---|---|---|---|---|
-| [ADLD](https://www.kaggle.com/datasets/zwbzwb12341234/a-dual-labeled-dataset) | 500* | png | Kaggle | 2024 | China | ~2940×1435 or ~987×478 |
-| [DENTEX](https://zenodo.org/records/7812323#.ZDQE1uxBwUG) | 3903 | png | Zenodo | 2023 | Switzerland | ~2950×1316 or ~1976×976 |
-| [TSXK](https://www.kaggle.com/datasets/humansintheloop/teeth-segmentation-on-dental-x-ray-images) | 1196 | png | Kaggle | 2023 | DR Congo | 2041×1024 |
-| [TUFTS](https://tdd.ece.tufts.edu/) | 1000 | jpg | On Request | 2022 | USA | 1615×840 |
-| [USPFORP](https://pubmed.ncbi.nlm.nih.gov/38632036/) | 936 | jpg | On Request | 2024 | Brazil | 2903×1536 |
+| Class | Abbr. | Images | Percentage |
+|---|---|---|---|
+| Nevus | NV | 7,424 | 52.60% |
+| Basal Cell Carcinoma | BCC | 3,026 | 21.43% |
+| Benign Keratosis-like | BKL | 1,637 | 11.60% |
+| **Melanoma** | **MEL** | **1,563** | **11.03%** |
+| Squamous Cell Carcinoma | SCC | 466 | 3.34% |
+| **Total** | | **14,116** | **100%** |
+
+**Dataset Sources:**
+- [ISIC 2025 (MLK10k)](https://api.isic-archive.com/doi/milk10k/)
+- [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T)
 
 ---
 
 ## 🧠 Overview
 
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/CcSvKjSuqpj8wKQwb9XBlE4l9Br129wS/image.png" alt="PanoDiff Architecture" width="800"/>
+  <img src="images/overall.png" alt="Methodology Overview" width="600"/>
   <br>
-  <em>Figure: General principle of synthetic image generation through manifold representation. Consider a dataset of images {x<sub>k</sub>}<sub>k=1</sub><sup>n</sup>, where x<sub>k</sub> ∼ p(x). These images serve as samples from the target distribution p(x). A best sampler G<sub>θ</sub> is one such that x̂ = G<sub>θ</sub>(z), where z ∼ 𝒩(0, I), to produce high-quality samples resembling the true data distribution p.</em>
+  <em>Figure: General framework of SkinGenBench showing the two preprocessing pipelines (Basic and Advanced), generative model training (StyleGAN2-ADA and DDPM), and evaluation through image quality metrics and downstream classification tasks.</em>
 </p>
 
-For the top-most figure in this readme:
-<p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/wvClGg717OZvK86TCILc0EUC5ckEHvGn/image.png" alt="PanoDiff Working Process" width="800"/>
-  <br>
-  <em>Figure: Working of PanoDiff in three key steps: (1) In the forward phase, noise is added to the input image x<sub>t=0</sub> over t=1000 time steps, following a β-schedule (slow-start and fast-finish). The plot on the right shows pixel variation metrics converging to 0.5 because the image is pure noise at t=1000. (2) The reverse phase (in left) involves training a U-Net (using L<sub>1</sub> loss), shown on the left, such that it takes a random source image with a random noisy image at t. The trained U-Net predicts most of the noise given a noisy image at t. For comparison, an old method is shown (in right), which performs denoising through a slow, stochastic, step-by-step process, requiring hundreds to thousands of iterations to gradually remove noise using the frozen U-Net from the previous step (on the left). (3) The image generation process in PanoDiff involves iteratively predicting and removing noise from a noisy image x<sub>t=0</sub> using a frozen U-Net, resulting in a slightly less noisy image. The resulting image is added with noise and fed to the U-Net, which again predicts and removes noise. This process continues for <em>inference</em> time steps.</em>
-</p>
+**Preprocessing Pipelines:**
+- **Pipeline A (Basic):** Standard augmentations including random rotations, horizontal/vertical flips, and resizing to 256×256 resolution.
+- **Pipeline B (Advanced):** All transformations from Pipeline A plus DullRazor artifact removal algorithm to eliminate hair and ruler marks through morphological black-hat transformation and texture reconstruction.
+
+**Generative Models:**
+- **StyleGAN2-ADA:** Adaptive discriminator augmentation, 8-layer mapping network, progressive synthesis from 4×4×256 to 256×256. Trained for 240,000 images with transfer learning from FFHQ dataset.
+- **DDPM:** U-Net architecture with self-attention and residual blocks, 500-step diffusion process. Trained for 120 epochs with transfer learning from CELEBA-HQ dataset.
+
+**Image Subset Nomenclature:**
+
+| Source | Basic Preprocessing (BS) | Advanced Preprocessing (AD) |
+|--------|--------------------------|------------------------------|
+| Ground Truth | BS_GT | AD_GT |
+| StyleGAN2-ADA | BS_GN | AD_GN |
+| DDPM | BS_DF | AD_DF |
 
 ---
 
-## 📄 Visiblity (Need to update later)
-**PanoDiff-SR: Synthesizing Dental Panoramic Radiographs using Diffusion and Super-resolution**  
-Sanyam Jain, Bruna Neves de Freitas, Andreas Basse-O'Connor, Alexandros	Iosifidis, Ruben Pauwels
-[[GitHub]](https://github.com/s4nyam/panodiff) | [[PDF]](https://github.com/s4nyam/panodiff) | [[Project]](https://github.com/s4nyam/panodiff) | [[Results]](https://github.com/s4nyam/panodiff) | [[TarBall]](https://aarhusuniversitet-my.sharepoint.com/:f:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)?csf=1&web=1&e=3n9Chz) 
+## 📄 Publication
+**SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
+N. A. Adarsh Pritam, Jeba Shiney  
+[[GitHub]](#add-link-here) | [[PDF]](#add-link-here) | [[Project]](#add-link-here) | [[Results]](#add-link-here)
 
 ---
 
@@ -92,82 +104,83 @@ Sanyam Jain, Bruna Neves de Freitas, Andreas Basse-O'Connor, Alexandros	Iosifidi
 
 ## Installation
 
-1. **Installation:**
-   ```bash
-   git clone https://github.com/s4nyam/PanoDiff.git
-   cd panodiff
-   ```
+1. **Clone the repository:**
+```bash
+   git clone https://github.com/adarsh-crafts/SkinGenBench.git
+   cd SkinGenBench
+```
 
 2. **Create a virtual environment:**
-   ```bash
+```bash
    python3 -m venv venv
    source venv/bin/activate
    pip install -r requirements.txt
-   ```
+```
 
 3. **Install PyTorch:**
    Install PyTorch following instructions from [PyTorch official site](https://pytorch.org/).
 
 **requirements.txt**
 ```markdown
-h5py
-matplotlib
-natsort
+torch>=2.0.0
+torchvision>=0.15.0
 numpy
-opencv_contrib_python
-pandas
+opencv-python
+matplotlib
+scikit-learn
 scipy
 tqdm
-retinaface-pytorch
-diffusers
-basicSR
-einops
-nvitop
-flask
-firebase-admin
-pyngrok
+h5py
+pandas
+Pillow
 ```
 
 ---
 
 ## Model Zoo
-Pretrained Models for PanoDiff and SR are avaialble here in table below: 
+Pretrained Models for StyleGAN2-ADA and DDPM are available here in table below: 
 
-We release pretrained models for PanoDiff and SR-transformer, you can load these models and use it for independent purposes.
+We release pretrained models for StyleGAN2-ADA and DDPM trained on both preprocessing pipelines, you can load these models and use them for independent purposes.
 
-### Diffusion Models
+### StyleGAN2-ADA Models
 | Configuration      | File          |
 |--------------------|------------------|
-| Epoch 11               | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/PanoDiff_pretrained/ddpm-model-ep11.pth?csf=1&web=1&e=DzbeLf)    |
-| Epoch 33      | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/PanoDiff_pretrained/ddpm-model-ep33.pth?csf=1&web=1&e=jHa32E) | 
-| Epoch 55 | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/PanoDiff_pretrained/ddpm-model-ep55.pth?csf=1&web=1&e=OMAlv9) |
-| Epoch 77 | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/PanoDiff_pretrained/ddpm-model-ep77.pth?csf=1&web=1&e=CqjPJc) |
-| Epoch 99 | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/PanoDiff_pretrained/ddpm-model-ep99.pth?csf=1&web=1&e=xxDXps) |
-| Epoch 110 | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/PanoDiff_pretrained/ddpm-model-ep110.pth?csf=1&web=1&e=8Mc6Kv) |
+| Basic Preprocessing (BS_GN)               | [Link](#add-link-here)    |
+| Advanced Preprocessing (AD_GN)      | [Link](#add-link-here) | 
 
 
-### SR Models
+### DDPM Models
 | Configuration      | File           |
 |--------------------|------------------|
-| Real_HAT_GAN_SRx4_finetuned               | [Link](https://aarhusuniversitet-my.sharepoint.com/:u:/r/personal/au775886_uni_au_dk/Documents/Pano%20Diff%20(Public)/ModelZoo/SR_pretrained/trained_models/Real_HAT_GAN_SRx4_finetuned.pth?csf=1&web=1&e=RDUFEI)    |
+| Basic Preprocessing (BS_DF)               | [Link](#add-link-here)    |
+| Advanced Preprocessing (AD_DF)               | [Link](#add-link-here)    |
 
+
+### Classifier Models
+| Configuration      | File           |
+|--------------------|------------------|
+| ResNet-18 (A3 Pipeline)               | [Link](#add-link-here)    |
+| ResNet-50 (A3 Pipeline)               | [Link](#add-link-here)    |
+| VGG-16 (A3 Pipeline)               | [Link](#add-link-here)    |
+| ViT-B/16 (A3 Pipeline)               | [Link](#add-link-here)    |
+| EfficientNet-B0 (A3 Pipeline)               | [Link](#add-link-here)    |
 
 ---
 
 ## Training
 
-Train PanoDiff and SR with the provided "how-to" files in each nested directories.
+Train StyleGAN2-ADA and DDPM with the provided configuration files in each nested directory.
 
 
 **Training Details:**
 
-| Configuration      | Lowest            | Highest          |
+| Configuration      | Minimum            | Maximum          |
 |--------------------|-------------------|------------------|
-| GPU               | RTX 6000 48GB × 1 | A100 80GB × 4    |
-| RAM               | 128 GB            | 256 GB           |
-| Train Batch       | 4                 | 16               |
-| Evaluation Batch  | 16                | 48               |
-| Input Resolution  | 256×128×3         | 256×128×3        |
+| GPU               | NVIDIA RTX 4060 8GB × 1 | NVIDIA L4 22GB × 1    |
+| RAM               | 8 GB            | 22 GB           |
+| Train Batch (GAN/DDPM)       | 8                 | 16               |
+| Train Batch (Classifier)  | 32                | 64               |
+| Input Resolution  | 256×256×3         | 256×256×3        |
 
 ---
 
@@ -180,28 +193,61 @@ Train PanoDiff and SR with the provided "how-to" files in each nested directorie
 ## Results
 
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/Z4p3O7Esis2b0kpeELr1jCW0cqzf9kRD/image.png" alt="PanoDiffSR Epochs" width="800"/>
+  <img src="images\t-SNE.svg" alt="t-SNE Visualization" width="600"/>
   <br>
-  <em>Figure: Comparison of generated PRs across epochs. Each column represents a different epoch from left to right, showing the images generated using same unique seed per row.</em>
+  <em>Figure: t-SNE embeddings in 2D visualization for basic-pipeline (BS, left) and advanced-pipeline (AD, right) data showing ground truth (GT), StyleGAN2-ADA (GN), and DDPM (DF) distributions. Euclidean distances between centroids: BS_GT-BS_GN: 2.72, BS_GT-BS_DF: 58.01, AD_GT-AD_GN: 6.76, AD_GT-AD_DF: 69.97.</em>
 </p>
 
 
-<p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/IWhTJVlMsVK41NLhMmhx5sQREorwb4j6/image.png" alt="Results from Dentists" width="900"/>
-  <br>
-  <em>Table: Real vs synthetic image combinations and respective Fréchet inception distance (FID). Lower scores indicate greater similarity. <br/> Figure: Pie charts for each observer showing distribution of correct and incorrect decisions. ‘Fully’ and ‘partially’ refers to the level of certainty indicated by the observer for a given answer, as described in the text.</em>
-</p>
+
+**Fréchet Inception Distance (FID)** - Lower is better
+
+| Comparison | Basic Pipeline (BS) | Advanced Pipeline (AD) |
+|------------|---------------------|------------------------|
+| Real vs StyleGAN2-ADA | 82.75 | 82.59 |
+| Real vs DDPM | 191.75 | 187.36 |
+| StyleGAN2-ADA vs DDPM | 126.00 | 138.39 |
+
+**Inception Score (IS)** - Higher is better
+
+| Type | Basic Pipeline (BS) | Advanced Pipeline (AD) |
+|------|---------------------|------------------------|
+| Real Images | 3.82 ± 0.14 | 3.77 ± 0.13 |
+| StyleGAN2-ADA | 3.08 ± 0.09 | 2.93 ± 0.10 |
+| DDPM | 2.17 ± 0.05 | 2.29 ± 0.06 |
 
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/Md1JLGjyrRviPOF8ES7PmAKFVMp9V7uN/image.png" alt="TP,TN,FP,FN" width="800"/>
+  <img src="images\model-acc-macf1_mel-f1-roc.png" alt="Classifier Performance" width="600"/>
   <br>
-  <em>Figure: Examples of PRs from expert evaluation. Within each category, the first row corresponds to fully certain (FC) and the second row to partially certain (PC) responses. Examples were selected for each category based on the majority of the observers’ assessments.</em>
+  <em>Figure: Classifier performance metrics across A1-A3 (BS) vs B1-B3 (AD). Top-left: Mean accuracy per model. Top-right: Average Macro-F1 scores. Bottom-left: Per-class F1 scores for melanoma (MEL). Bottom-right: ROC curves showing improved detectability with synthetic augmentation.</em>
 </p>
 
+**Mean Accuracy Across Pipelines**
+
+| Model | Pipeline A (Basic) | Pipeline B (Advanced) | Δ |
+|-------|-------------------|----------------------|-----|
+| ViT-B/16 | **0.8942** | 0.8872 | +0.70% |
+| ResNet-50 | **0.8958** | 0.8886 | +0.72% |
+| VGG-16 | **0.8748** | 0.8636 | +1.12% |
+| EfficientNet-B0 | **0.8596** | 0.8494 | +1.02% |
+| ResNet-18 | **0.8358** | 0.8282 | +0.76% |
+
+**Average Macro-F1 Scores**
+
+| Model | Pipeline A (Basic) | Pipeline B (Advanced) | Δ |
+|-------|-------------------|----------------------|-----|
+| ViT-B/16 | **0.8282** | 0.8196 | +0.86% |
+| ResNet-50 | **0.8307** | 0.8185 | +1.22% |
+| VGG-16 | **0.8072** | 0.7881 | +1.91% |
+| EfficientNet-B0 | **0.7832** | 0.7644 | +1.88% |
+| ResNet-18 | **0.7362** | 0.7251 | +1.11% |
+
+**Melanoma (MEL) F1-Score Improvements:** Synthetic augmentation improved melanoma detection by **12-20%** across all classifiers, with Pipeline A3 (DDPM + Basic preprocessing) achieving the best results.
+
 <p align="center">
-  <img src="https://dl3.pushbulletusercontent.com/woqS84fuYDbBVLZwLX6LV3biAeQxyvS2/image.png" alt="AMs" width="800"/>
+  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="600"/>
   <br>
-  <em>Figure: Attention maps generated using a trained ViT for two classes - top three rows for real images and bottom three rows for synthetic images. The confidence value ’C’ represents the ViT classifier’s output and ranges from 0 (for synthetic) to 1 (for real). Prediction values in red correspond to incorrect classification..</em>
+  <em>Figure: Grad-CAM visualization of saliency maps produced by ViT-B/16 classifier. Real images (first row), DDPM-generated images (second row), and StyleGAN2-ADA-generated images (third row). ResNet-50 shows more spatially coherent activations compared to ViT-B/16's dispersed attention patterns.</em>
 </p>
 
 ---
@@ -209,16 +255,13 @@ Train PanoDiff and SR with the provided "how-to" files in each nested directorie
 ## Citation
 
 If you find this work useful, please cite our paper:
-
 ```bibtex
-@misc{jain2025panodiffsrsynthesizingdentalpanoramic,
-      title={PanoDiff-SR: Synthesizing Dental Panoramic Radiographs using Diffusion and Super-resolution}, 
-      author={Sanyam Jain and Bruna Neves de Freitas and Andreas Basse-OConnor and Alexandros Iosifidis and Ruben Pauwels},
-      year={2025},
-      eprint={2507.09227},
-      archivePrefix={arXiv},
-      primaryClass={eess.IV},
-      url={https://arxiv.org/abs/2507.09227}, 
+@article{pritam2025skingenbench,
+  title={SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology},
+  author={Pritam, N. A. Adarsh, Shiney Jeba, and Sanyam Jain},
+  journal={arXiv preprint arXiv:XXXX.XXXXX},
+  year={2025},
+  institution={Alliance University, Bangalore}
 }
 ```
 
@@ -226,19 +269,15 @@ If you find this work useful, please cite our paper:
 
 ## Downloads
 
-We release several offline-material for reproducing the experiments and results (but not limited to). These downloads will also be useuful if you want to build on top of this work. Please consider to use the citation code above for future work.
+We release several offline materials for reproducing the experiments and results (but not limited to). These downloads will also be useful if you want to build on top of this work. Please consider using the citation code above for future work.
 
-[Diffusion Models📥](https://archive.org/download/panodiff/trained_models/)
+[StyleGAN2-ADA Models📥](#add-link-here)
 
-[SR Models📥](https://archive.org/download/panodiff/experiments/)
+[DDPM Models📥](#add-link-here)
 
----
+[Classifier Models📥](#add-link-here)
 
-## Acknowledgments
-
-- Gratitude to the open-source community for datasets and tools.
-- Together with Dept of Dentistry and Oral Health AU Denmark, Dept of Mathematics AU Denmark, and Computer Science Unit Tampere University Finland.
-- Computing resources were supported by ECE and MaLeCi Aarhus University, Denmark
+[Preprocessed Datasets📥](#add-link-here)
 
 ---
 
