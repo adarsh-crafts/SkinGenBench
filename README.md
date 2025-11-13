@@ -24,12 +24,6 @@
 - **Clinical Focus:** Addresses the critical melanoma class imbalance (11.03% of dataset) with synthetic augmentation achieving 12-20% F1-score improvements.
 - **Comprehensive Benchmarking:** Five state-of-the-art classifiers evaluated (ResNet18, ResNet50, VGG16, ViT-B/16, EfficientNet-B0) with interpretability analysis via Grad-CAM.
 
-<p align="center">
-  <img src="images/selected_examples.png" alt="Selected Examples" width="600"/>
-  <br>
-  <em>Selected **synthetic examples** from StyleGAN2-ADA (top) and DDPM (bottom) that achieved high perceptual quality.</em>
-</p>
-
 
 ## 📊 Dataset
 
