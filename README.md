@@ -7,7 +7,7 @@
 
 
 <p align="center">
-  <img src="images\lesion_types.svg" alt="SkinGenBench Teaser" width="400"/>
+  <img src="images/lesion_types.svg" alt="SkinGenBench Teaser" width="400"/>
 </p>
 
 > 📢 Official PyTorch implementation of the **SkinGenBench**:  
