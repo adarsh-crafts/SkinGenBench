@@ -77,8 +77,8 @@ Overall experimental design showing dual preprocessing pipelines, generative mod
 
 ## 📄 Publication
 **SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
-N. A. Adarsh Pritam, Jeba Shiney  
-[[GitHub]](#add-link-here) | [[PDF]](#add-link-here) | [[Project]](#add-link-here) | [[Results]](#add-link-here)
+N. A. Adarsh Pritam, Jeba Shiney  , Sanyam Jain
+[[GitHub]](https://github.com/adarsh-crafts/SkinGenBench) | [[PDF]](#add-link-here)
 
 ---
 
@@ -86,12 +86,8 @@ N. A. Adarsh Pritam, Jeba Shiney
 - [Installation](#installation)
 - [Model Zoo](#model-zoo)
 - [Training](#training)
-- [Evaluation](#evaluation)
 - [Results](#results)
 - [Citation](#citation)
-- [Downloads](#downloads)
-- [Acknowledgments](#acknowledgments)
-- [License](#license)
 
 ---
 
@@ -131,38 +127,18 @@ Pillow
 ---
 
 ## Model Zoo
-Pretrained Models for StyleGAN2-ADA and DDPM are available here in table below: 
-
-We release pretrained models for StyleGAN2-ADA and DDPM trained on both preprocessing pipelines, you can load these models and use them for independent purposes.
+Pretrained Models for StyleGAN2-ADA and DDPM which were finetuned are available here in table below: 
 
 ### StyleGAN2-ADA Models
-| Configuration      | File          |
-|--------------------|------------------|
-| Basic Preprocessing (BS_GN)               | [Link](#add-link-here)    |
-| Advanced Preprocessing (AD_GN)      | [Link](#add-link-here) | 
-
-
-### DDPM Models
-| Configuration      | File           |
-|--------------------|------------------|
-| Basic Preprocessing (BS_DF)               | [Link](#add-link-here)    |
-| Advanced Preprocessing (AD_DF)               | [Link](#add-link-here)    |
-
-
-### Classifier Models
-| Configuration      | File           |
-|--------------------|------------------|
-| ResNet-18 (A3 Pipeline)               | [Link](#add-link-here)    |
-| ResNet-50 (A3 Pipeline)               | [Link](#add-link-here)    |
-| VGG-16 (A3 Pipeline)               | [Link](#add-link-here)    |
-| ViT-B/16 (A3 Pipeline)               | [Link](#add-link-here)    |
-| EfficientNet-B0 (A3 Pipeline)               | [Link](#add-link-here)    |
-
+| Model              | Configuration      | File          |
+|--------------------|--------------------|------------------|
+| StyleGAN2-ADA      | ```ffhq-res256-mirror-paper256-noaug.pkl``` | [Link](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/)    |
+| DDPM               | ```google/ncsnpp-ffhq-256``` | [Link](https://huggingface.co/google/ncsnpp-ffhq-256) | 
 ---
 
 ## Training
 
-Train StyleGAN2-ADA and DDPM with the provided configuration files in each nested directory.
+Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations in each nested directory.
 
 
 **Training Details:**
@@ -171,15 +147,7 @@ Train StyleGAN2-ADA and DDPM with the provided configuration files in each neste
 |--------------------|-------------------|------------------|
 | GPU               | NVIDIA RTX 4060 8GB × 1 | NVIDIA L4 22GB × 1    |
 | RAM               | 8 GB            | 22 GB           |
-| Train Batch (GAN/DDPM)       | 8                 | 16               |
-| Train Batch (Classifier)  | 32                | 64               |
 | Input Resolution  | 256×256×3         | 256×256×3        |
-
----
-
-## Evaluation
-
-(Coming Soon!)
 
 ---
 
@@ -251,29 +219,10 @@ If you find this work useful, please cite our paper:
 ```bibtex
 @article{pritam2025skingenbench,
   title={SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology},
-  author={Pritam, N. A. Adarsh, Shiney Jeba, and Sanyam Jain},
+  author={N. A. Adarsh Pritam, Shiney Jeba, and Sanyam Jain},
   journal={arXiv preprint arXiv:XXXX.XXXXX},
   year={2025},
   institution={Alliance University, Bangalore}
 }
 ```
-
 ---
-
-## Downloads
-
-We release several offline materials for reproducing the experiments and results (but not limited to). These downloads will also be useful if you want to build on top of this work. Please consider using the citation code above for future work.
-
-[StyleGAN2-ADA Models📥](#add-link-here)
-
-[DDPM Models📥](#add-link-here)
-
-[Classifier Models📥](#add-link-here)
-
-[Preprocessed Datasets📥](#add-link-here)
-
----
-
-## License
-
-(Coming Soon!)
