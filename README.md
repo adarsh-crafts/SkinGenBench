@@ -1,4 +1,4 @@
-# SkinGenBench
+# SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology
 
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 [![arXiv](https://img.shields.io/badge/arXiv-preprint-red)](#add-link-here)
@@ -10,8 +10,7 @@
   <img src="images/lesion_types.svg" alt="SkinGenBench Teaser" width="400"/>
 </p>
 
-> 📢 Official PyTorch implementation of the **SkinGenBench**:  
-> **SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
+> 📢 Official PyTorch implementation of the **SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
 > N. A. Adarsh Pritam, Jeba Shiney, Sanyam Jain  
 [[Project]](https://github.com/adarsh-crafts/SkinGenBench) | [[Code]](https://github.com/adarsh-crafts/SkinGenBench)
 ---
