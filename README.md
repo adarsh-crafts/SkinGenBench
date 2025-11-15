@@ -177,7 +177,7 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 | DDPM | 2.17 ± 0.05 | 2.29 ± 0.06 |
 
 <p align="center">
-  <img src="images\model-acc-macf1_mel-f1-roc.png" alt="Classifier Performance" width="600"/>
+  <img src="images\model-acc-macf1_mel-f1-roc.png" alt="Classifier Performance" width="400"/>
   <br>
   <em>Figure: Classifier performance metrics across A1-A3 (BS) vs B1-B3 (AD). Top-left: Mean accuracy per model. Top-right: Average Macro-F1 scores. Bottom-left: Per-class F1 scores for melanoma (MEL). Bottom-right: ROC curves showing improved detectability with synthetic augmentation.</em>
 </p>
@@ -205,7 +205,7 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 **Melanoma (MEL) F1-Score Improvements:** Synthetic augmentation improved melanoma detection by **12-20%** across all classifiers, with Pipeline A3 (DDPM + Basic preprocessing) achieving the best results.
 
 <p align="center">
-  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="600"/>
+  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="200"/>
   <br>
   <em>Figure: Grad-CAM visualization of saliency maps produced by ViT-B/16 classifier. Real images (first row), DDPM-generated images (second row), and StyleGAN2-ADA-generated images (third row). ResNet-50 shows more spatially coherent activations compared to ViT-B/16's dispersed attention patterns.</em>
 </p>
