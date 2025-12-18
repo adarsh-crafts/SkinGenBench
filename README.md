@@ -1,4 +1,4 @@
-# SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology
+# SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis
 
 [![License](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 [![arXiv](https://img.shields.io/badge/arXiv-preprint-red)](#add-link-here)
@@ -10,8 +10,8 @@
   <img src="images/lesion_types.svg" alt="SkinGenBench Teaser" width="400"/>
 </p>
 
-> 📢 Official PyTorch implementation of the **SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
-> N. A. Adarsh Pritam, Jeba Shiney, Sanyam Jain  
+> 📢 Official PyTorch implementation of **SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis**  
+> N. A. Adarsh Pritam, Jeba Shiney O, Sanyam Jain  
 [[Project]](https://github.com/adarsh-crafts/SkinGenBench) | [[Code]](https://github.com/adarsh-crafts/SkinGenBench)
 ---
 
@@ -19,7 +19,7 @@
 - **Systematic Evaluation:** First comprehensive comparison of preprocessing complexity impact on GANs (StyleGAN2-ADA) and Diffusion Models (DDPM) for melanoma synthesis.
 - **Dual Pipeline Design:** Two distinct preprocessing approaches - basic and advanced (with DullRazor artifact removal) - evaluated across generative architectures.
 - **Multi-Metric Assessment:** Quantitative evaluation using FID, Inception Score, and KID, combined with downstream classifier performance analysis.
-- **Clinical Focus:** Addresses the critical melanoma class imbalance (11.03% of dataset) with synthetic augmentation achieving 12-20% F1-score improvements.
+- **Clinical Focus:** Addresses the critical melanoma class imbalance (11.03% of dataset) with synthetic augmentation achieving 8-15% absolute F1-score improvements.
 - **Comprehensive Benchmarking:** Five state-of-the-art classifiers evaluated (ResNet18, ResNet50, VGG16, ViT-B/16, EfficientNet-B0) with interpretability analysis via Grad-CAM.
 
 
@@ -75,8 +75,9 @@ Overall experimental design showing dual preprocessing pipelines, generative mod
 ---
 
 ## 📄 Publication
-**SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology**  
-N. A. Adarsh Pritam, Jeba Shiney  , Sanyam Jain
+**SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis**  
+N. A. Adarsh Pritam, Jeba Shiney O, Sanyam Jain  
+*Alliance University, Bangalore & Østfold University College, Norway*  
 [[GitHub]](https://github.com/adarsh-crafts/SkinGenBench) | [[PDF]](#add-link-here)
 
 ---
@@ -109,7 +110,7 @@ N. A. Adarsh Pritam, Jeba Shiney  , Sanyam Jain
    Install PyTorch following instructions from [PyTorch official site](https://pytorch.org/).
 
 **requirements.txt**
-```markdown
+```
 torch>=2.0.0
 torchvision>=0.15.0
 numpy
@@ -131,8 +132,8 @@ Pretrained Models for StyleGAN2-ADA and DDPM which were finetuned are available 
 ### StyleGAN2-ADA Models
 | Model              | Configuration      | File          |
 |--------------------|--------------------|------------------|
-| StyleGAN2-ADA      | ```ffhq-res256-mirror-paper256-noaug.pkl``` | [Link](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/)    |
-| DDPM               | ```google/ncsnpp-ffhq-256``` | [Link](https://huggingface.co/google/ncsnpp-ffhq-256) | 
+| StyleGAN2-ADA      | FFHQ 256×256 pretrained | [NVIDIA CDN](https://nvlabs-fi-cdn.nvidia.com/stylegan2-ada-pytorch/pretrained/transfer-learning-source-nets/ffhq-res256-mirror-paper256-noaug.pkl)    |
+| DDPM               | CELEBA-HQ 256×256 pretrained | [Hugging Face](https://huggingface.co/google/ncsnpp-ffhq-256) |
 ---
 
 ## Training
@@ -155,26 +156,31 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 <p align="center">
   <img src="images\t-SNE.svg" alt="t-SNE Visualization" width="600"/>
   <br>
-  <em>Figure: t-SNE embeddings in 2D visualization for basic-pipeline (BS, left) and advanced-pipeline (AD, right) data showing ground truth (GT), StyleGAN2-ADA (GN), and DDPM (DF) distributions. Euclidean distances between centroids: BS_GT-BS_GN: 2.72, BS_GT-BS_DF: 58.01, AD_GT-AD_GN: 6.76, AD_GT-AD_DF: 69.97.</em>
+  <em>Figure: t-SNE embeddings showing ground truth (GT), StyleGAN2-ADA (GN), and DDPM (DF) distributions for basic (left) and advanced (right) preprocessing pipelines. Euclidean distances between cluster centers: Basic pipeline - GT-GN: 48.56, GT-DF: 51.03, GN-DF: 75.64; Advanced pipeline - GT-GN: 34.47, GT-DF: 51.44, GN-DF: 74.39.</em>
 </p>
 
 
 
 **Fréchet Inception Distance (FID)** - Lower is better
 
-| Comparison | Basic Pipeline (BS) | Advanced Pipeline (AD) |
-|------------|---------------------|------------------------|
-| Real vs StyleGAN2-ADA | 82.75 | 82.59 |
-| Real vs DDPM | 191.75 | 187.36 |
-| StyleGAN2-ADA vs DDPM | 126.00 | 138.39 |
+| Model | Basic Pipeline (BS) | Advanced Pipeline (AD) |
+|-------|---------------------|------------------------|
+| StyleGAN2-ADA (BSGN/ADGN) | 79.36 | **65.47** |
+| DDPM (BSDF/ADDF) | 83.04 | 90.22 |
+
+**Kernel Inception Distance (KID)** - Lower is better
+
+| Model | Basic Pipeline (BS) | Advanced Pipeline (AD) |
+|-------|---------------------|------------------------|
+| StyleGAN2-ADA (BSGN/ADGN) | 0.0664 | **0.0546** |
+| DDPM (BSDF/ADDF) | 0.0684 | 0.0772 |
 
 **Inception Score (IS)** - Higher is better
 
-| Type | Basic Pipeline (BS) | Advanced Pipeline (AD) |
-|------|---------------------|------------------------|
-| Real Images | 3.82 ± 0.14 | 3.77 ± 0.13 |
-| StyleGAN2-ADA | 3.08 ± 0.09 | 2.93 ± 0.10 |
-| DDPM | 2.17 ± 0.05 | 2.29 ± 0.06 |
+| Model | Basic Pipeline (BS) | Advanced Pipeline (AD) |
+|-------|---------------------|------------------------|
+| StyleGAN2-ADA (BSGN/ADGN) | **3.22** | 2.77 |
+| DDPM (BSDF/ADDF) | 2.50 | 2.45 |
 
 <p align="center">
   <img src="images\model-acc-macf1_mel-f1-roc.png" alt="Classifier Performance" width="600"/>
@@ -182,32 +188,36 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
   <em>Figure: Classifier performance metrics across A1-A3 (BS) vs B1-B3 (AD). Top-left: Mean accuracy per model. Top-right: Average Macro-F1 scores. Bottom-left: Per-class F1 scores for melanoma (MEL). Bottom-right: ROC curves showing improved detectability with synthetic augmentation.</em>
 </p>
 
-**Mean Accuracy Across Pipelines**
+**Global Classification Performance - Best Results (Pipeline A2: Basic + StyleGAN2-ADA)**
 
-| Model | Pipeline A (Basic) | Pipeline B (Advanced) | Δ |
-|-------|-------------------|----------------------|-----|
-| ViT-B/16 | **0.8942** | 0.8872 | +0.70% |
-| ResNet-50 | **0.8958** | 0.8886 | +0.72% |
-| VGG-16 | **0.8748** | 0.8636 | +1.12% |
-| EfficientNet-B0 | **0.8596** | 0.8494 | +1.02% |
-| ResNet-18 | **0.8358** | 0.8282 | +0.76% |
+| Model | Macro-F1 | Accuracy | ROC-AUC | Brier Score |
+|-------|----------|----------|---------|-------------|
+| **ViT-B/16** | 0.8393 | 0.8985 | **0.9822** | **0.0302** |
+| **ResNet-50** | **0.8393** | **0.8989** | 0.9802 | 0.0314 |
+| VGG-16 | 0.8181 | 0.8797 | 0.9774 | 0.0365 |
+| EfficientNet-B0 | 0.7977 | 0.8657 | 0.9698 | 0.0402 |
+| ResNet-18 | 0.7525 | 0.8360 | 0.9611 | 0.0479 |
 
-**Average Macro-F1 Scores**
+**Melanoma (MEL) Classification - Best Results (Pipeline A2: Basic + StyleGAN2-ADA)**
 
-| Model | Pipeline A (Basic) | Pipeline B (Advanced) | Δ |
-|-------|-------------------|----------------------|-----|
-| ViT-B/16 | **0.8282** | 0.8196 | +0.86% |
-| ResNet-50 | **0.8307** | 0.8185 | +1.22% |
-| VGG-16 | **0.8072** | 0.7881 | +1.91% |
-| EfficientNet-B0 | **0.7832** | 0.7644 | +1.88% |
-| ResNet-18 | **0.7362** | 0.7251 | +1.11% |
+| Model | MEL F1 | Sensitivity | Specificity | Precision | ROC-AUC | PR-AUC |
+|-------|--------|-------------|-------------|-----------|---------|--------|
+| **ViT-B/16** | **0.8831** | **0.8564** | **0.9798** | **0.9115** | **0.9802** | **0.9511** |
+| ResNet-50 | 0.8663 | 0.8401 | 0.9758 | 0.8941 | 0.9787 | 0.9445 |
+| VGG-16 | 0.8438 | 0.8108 | 0.9730 | 0.8796 | 0.9729 | 0.9228 |
+| EfficientNet-B0 | 0.8126 | 0.7781 | 0.9667 | 0.8503 | 0.9633 | 0.9043 |
+| ResNet-18 | 0.7724 | 0.7390 | 0.9576 | 0.8089 | 0.9542 | 0.8774 |
 
-**Melanoma (MEL) F1-Score Improvements:** Synthetic augmentation improved melanoma detection by **12-20%** across all classifiers, with Pipeline A3 (DDPM + Basic preprocessing) achieving the best results.
+**Key Findings:**
+- Synthetic augmentation improved melanoma F1-score by **8-15%** absolute across all architectures
+- ViT-B/16 achieved the best melanoma-specific performance (F1≈0.88, ROC-AUC≈0.98)
+- Pipeline A (Basic preprocessing) consistently outperformed Pipeline B (Advanced preprocessing)
+- StyleGAN2-ADA generated more realistic and class-coherent samples than DDPM (lower FID, higher IS)
 
 <p align="center">
   <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="200"/>
   <br>
-  <em>Figure: Grad-CAM visualization of saliency maps produced by ViT-B/16 classifier. Real images (first row), DDPM-generated images (second row), and StyleGAN2-ADA-generated images (third row). ResNet-50 shows more spatially coherent activations compared to ViT-B/16's dispersed attention patterns.</em>
+  <em>Figure: Grad-CAM saliency maps from ViT-B/16 and ResNet-50 classifiers trained on A2 pipeline (Basic + StyleGAN2-ADA). ResNet-50 produces compact, morphologically aligned activations, while ViT-B/16 shows broader, context-sensitive patterns. Diffusion-augmented samples yield smoother anatomically coherent attention maps.</em>
 </p>
 
 ---
@@ -216,12 +226,12 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 
 If you find this work useful, please cite our paper:
 ```bibtex
-@article{pritam2025skingenbench,
-  title={SkinGenBench: Toward Reproducible and Clinically Aligned Synthetic Data Generation for Dermatology},
-  author={N. A. Adarsh Pritam, Shiney Jeba, and Sanyam Jain},
-  journal={arXiv preprint arXiv:XXXX.XXXXX},
+@inproceedings{pritam2025skingenbench,
+  title={SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis},
+  author={Pritam, N. A. Adarsh and O, Jeba Shiney and Jain, Sanyam},
+  booktitle={Proceedings of the International Conference on Medical Image Computing and Computer-Assisted Intervention},
   year={2025},
-  institution={Alliance University, Bangalore}
+  organization={Springer}
 }
 ```
 ---
