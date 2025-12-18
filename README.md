@@ -16,11 +16,11 @@
 ---
 
 ## 🌟 Highlights
-- **Systematic Evaluation:** First comprehensive comparison of preprocessing complexity impact on GANs (StyleGAN2-ADA) and Diffusion Models (DDPM) for melanoma synthesis.
-- **Dual Pipeline Design:** Two distinct preprocessing approaches - basic and advanced (with DullRazor artifact removal) - evaluated across generative architectures.
-- **Multi-Metric Assessment:** Quantitative evaluation using FID, Inception Score, and KID, combined with downstream classifier performance analysis.
-- **Clinical Focus:** Addresses the critical melanoma class imbalance (11.03% of dataset) with synthetic augmentation achieving 8-15% absolute F1-score improvements.
-- **Comprehensive Benchmarking:** Five state-of-the-art classifiers evaluated (ResNet18, ResNet50, VGG16, ViT-B/16, EfficientNet-B0) with interpretability analysis via Grad-CAM.
+- **First Systematic Benchmark:** Controlled evaluation of preprocessing complexity (basic geometric vs. advanced artifact removal) across GANs (StyleGAN2-ADA) and Diffusion Models (DDPM) for dermoscopic melanoma synthesis.
+- **Architecture > Preprocessing:** Demonstrates that generative model choice has stronger impact than preprocessing complexity on both image fidelity and diagnostic utility.
+- **StyleGAN2-ADA Superiority:** Achieves lowest FID (≈65.5) and KID (≈0.05) with better class anchoring, while diffusion models produce higher variance at the cost of perceptual fidelity.
+- **Significant Clinical Impact:** Synthetic augmentation delivers 8-15% absolute melanoma F1-score improvements, with ViT-B/16 reaching F1≈0.88 and ROC-AUC≈0.98 (≈14% improvement over baselines).
+- **Reproducible Framework:** Unified assessment combining generative metrics (FID, IS, KID), downstream performance across five architectures (CNNs and transformers), and interpretability analysis via Grad-CAM on 14,116 dermoscopic images.
 
 
 ## 📊 Dataset
