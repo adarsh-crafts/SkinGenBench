@@ -154,9 +154,9 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 ## Results
 
 <p align="center">
-  <img src="images\t-SNE.svg" alt="t-SNE Visualization" width="600"/>
+  <img src="images\t-SNE.png" alt="t-SNE Visualization" width="600"/>
   <br>
-  <em>Figure: t-SNE embeddings showing ground truth (GT), StyleGAN2-ADA (GN), and DDPM (DF) distributions for basic (left) and advanced (right) preprocessing pipelines. Euclidean distances between cluster centers: Basic pipeline - GT-GN: 48.56, GT-DF: 51.03, GN-DF: 75.64; Advanced pipeline - GT-GN: 34.47, GT-DF: 51.44, GN-DF: 74.39.</em>
+  <em>Figure: t-SNE embeddings showing ground truth (GT), StyleGAN2-ADA (GN), and DDPM (DF) distributions for basic (left) and advanced (right) preprocessing pipelines.</em>
 </p>
 
 
@@ -181,12 +181,6 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 |-------|---------------------|------------------------|
 | StyleGAN2-ADA (BSGN/ADGN) | **3.22** | 2.77 |
 | DDPM (BSDF/ADDF) | 2.50 | 2.45 |
-
-<p align="center">
-  <img src="images\model-acc-macf1_mel-f1-roc.png" alt="Classifier Performance" width="600"/>
-  <br>
-  <em>Figure: Classifier performance metrics across A1-A3 (BS) vs B1-B3 (AD). Top-left: Mean accuracy per model. Top-right: Average Macro-F1 scores. Bottom-left: Per-class F1 scores for melanoma (MEL). Bottom-right: ROC curves showing improved detectability with synthetic augmentation.</em>
-</p>
 
 **Global Classification Performance - Best Results (Pipeline A2: Basic + StyleGAN2-ADA)**
 
@@ -215,7 +209,7 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 - StyleGAN2-ADA generated more realistic and class-coherent samples than DDPM (lower FID, higher IS)
 
 <p align="center">
-  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="200"/>
+  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="600"/>
   <br>
   <em>Figure: Grad-CAM saliency maps from ViT-B/16 and ResNet-50 classifiers trained on A2 pipeline (Basic + StyleGAN2-ADA). ResNet-50 produces compact, morphologically aligned activations, while ViT-B/16 shows broader, context-sensitive patterns. Diffusion-augmented samples yield smoother anatomically coherent attention maps.</em>
 </p>
