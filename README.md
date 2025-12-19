@@ -153,9 +153,9 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 
 
 
-# SkinGenBench: Performance Metrics
+## Performance Metrics
 
-## Generative Model Quality Metrics (Epoch 1000)
+### Generative Model Quality Metrics (Epoch 1000)
 
 **Fréchet Inception Distance (FID)** - Lower is better
 
