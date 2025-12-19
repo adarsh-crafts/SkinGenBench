@@ -56,14 +56,6 @@ Overall experimental design showing dual preprocessing pipelines, generative mod
   <em>Figure: General framework of SkinGenBench showing the two preprocessing pipelines (Basic and Advanced), generative model training (StyleGAN2-ADA and DDPM), and evaluation through image quality metrics and downstream classification tasks.</em>
 </p>
 
-**Preprocessing Pipelines:**
-- **Pipeline A (Basic):** Standard augmentations including random rotations, horizontal/vertical flips, and resizing to 256×256 resolution.
-- **Pipeline B (Advanced):** All transformations from Pipeline A plus DullRazor artifact removal algorithm to eliminate hair and ruler marks through morphological black-hat transformation and texture reconstruction.
-
-**Generative Models:**
-- **StyleGAN2-ADA:** Adaptive discriminator augmentation, 8-layer mapping network, progressive synthesis from 4×4×256 to 256×256. Trained for 240,000 images with transfer learning from FFHQ dataset.
-- **DDPM:** U-Net architecture with self-attention and residual blocks, 500-step diffusion process. Trained for 120 epochs with transfer learning from CELEBA-HQ dataset.
-
 **Image Subset Nomenclature:**
 
 | Source | Basic Preprocessing (BS) | Advanced Preprocessing (AD) |
@@ -71,7 +63,7 @@ Overall experimental design showing dual preprocessing pipelines, generative mod
 | Ground Truth | BS_GT | AD_GT |
 | StyleGAN2-ADA | BS_GN | AD_GN |
 | DDPM | BS_DF | AD_DF |
-
+| Ground-Truth Aug. | BS_GTA | AD_GTA
 ---
 
 ## 📄 Publication
@@ -161,6 +153,10 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 
 
 
+# SkinGenBench: Performance Metrics
+
+## Generative Model Quality Metrics (Epoch 1000)
+
 **Fréchet Inception Distance (FID)** - Lower is better
 
 | Model | Basic Pipeline (BS) | Advanced Pipeline (AD) |
@@ -182,50 +178,73 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 | StyleGAN2-ADA (BSGN/ADGN) | **3.22** | 2.77 |
 | DDPM (BSDF/ADDF) | 2.50 | 2.45 |
 
-**Global Classification Performance - Best Results (Pipeline A2: Basic + StyleGAN2-ADA)**
+---
 
-| Model | Macro-F1 | Accuracy | ROC-AUC | Brier Score |
-|-------|----------|----------|---------|-------------|
-| **ViT-B/16** | 0.8393 | 0.8985 | **0.9822** | **0.0302** |
-| **ResNet-50** | **0.8393** | **0.8989** | 0.9802 | 0.0314 |
-| VGG-16 | 0.8181 | 0.8797 | 0.9774 | 0.0365 |
-| EfficientNet-B0 | 0.7977 | 0.8657 | 0.9698 | 0.0402 |
-| ResNet-18 | 0.7525 | 0.8360 | 0.9611 | 0.0479 |
+## Global Classification Performance
 
-**Melanoma (MEL) Classification - Best Results (Pipeline A2: Basic + StyleGAN2-ADA)**
+**Best Results: Pipeline A2 (Basic Preprocessing + StyleGAN2-ADA Augmentation)**
 
-| Model | MEL F1 | Sensitivity | Specificity | Precision | ROC-AUC | PR-AUC |
-|-------|--------|-------------|-------------|-----------|---------|--------|
-| **ViT-B/16** | **0.8831** | **0.8564** | **0.9798** | **0.9115** | **0.9802** | **0.9511** |
-| ResNet-50 | 0.8663 | 0.8401 | 0.9758 | 0.8941 | 0.9787 | 0.9445 |
-| VGG-16 | 0.8438 | 0.8108 | 0.9730 | 0.8796 | 0.9729 | 0.9228 |
-| EfficientNet-B0 | 0.8126 | 0.7781 | 0.9667 | 0.8503 | 0.9633 | 0.9043 |
-| ResNet-18 | 0.7724 | 0.7390 | 0.9576 | 0.8089 | 0.9542 | 0.8774 |
+| Model | Macro-F1 | Balanced Acc | MCC | ROC-AUC | Accuracy | Brier Score ↓ |
+|-------|----------|--------------|-----|---------|----------|---------------|
+| **ViT-B/16** | **0.8393** | 0.8348 | 0.8515 | **0.9822** | **0.8985** | **0.0302** |
+| **ResNet-50** | **0.8393** | **0.8433** | **0.8525** | 0.9802 | **0.8989** | 0.0314 |
+| VGG-16 | 0.8181 | 0.8167 | 0.8243 | 0.9774 | 0.8797 | 0.0365 |
+| EfficientNet-B0 | 0.7977 | 0.7871 | 0.8033 | 0.9698 | 0.8657 | 0.0402 |
+| ResNet-18 | 0.7525 | 0.7424 | 0.7594 | 0.9611 | 0.8360 | 0.0479 |
 
-**Key Findings:**
-- Synthetic augmentation improved melanoma F1-score by **8-15%** absolute across all architectures
-- ViT-B/16 achieved the best melanoma-specific performance (F1≈0.88, ROC-AUC≈0.98)
-- Pipeline A (Basic preprocessing) consistently outperformed Pipeline B (Advanced preprocessing)
-- StyleGAN2-ADA generated more realistic and class-coherent samples than DDPM (lower FID, higher IS)
+---
+
+## Melanoma (MEL) Classification Performance
+
+**Best Results: Pipeline A2 (Basic Preprocessing + StyleGAN2-ADA Augmentation)**
+
+| Model | MEL F1 | Sensitivity | Specificity | Precision | ROC-AUC | PR-AUC | DOR |
+|-------|--------|-------------|-------------|-----------|---------|--------|-----|
+| **ViT-B/16** | **0.8831** | **0.8564** | **0.9798** | **0.9115** | **0.9802** | **0.9511** | **288.94** |
+| ResNet-50 | 0.8663 | 0.8401 | 0.9758 | 0.8941 | 0.9787 | 0.9445 | 211.93 |
+| VGG-16 | 0.8438 | 0.8108 | 0.9730 | 0.8796 | 0.9729 | 0.9228 | 154.56 |
+| EfficientNet-B0 | 0.8126 | 0.7781 | 0.9667 | 0.8503 | 0.9633 | 0.9043 | 101.76 |
+| ResNet-18 | 0.7724 | 0.7390 | 0.9576 | 0.8089 | 0.9542 | 0.8774 | 63.88 |
+
+### Key Melanoma Detection Improvements (A2 vs A1)
+
+- **MEL F1-score gains**: +8–15% across all architectures
+- **ViT-B/16**: MEL F1 improved from 0.7401 → **0.8831** (+14.3 percentage points)
+- **ResNet-50**: MEL F1 improved from 0.7362 → **0.8663** (+13.0 percentage points)
+- All models achieved ROC-AUC > 0.96 for melanoma detection
+
+---
+
+## Pipeline Comparison Summary
+
+| Pipeline | Description | Best Use Case |
+|----------|-------------|---------------|
+| **A2** | Basic preprocessing + StyleGAN2-ADA | **Recommended**: Best overall performance |
+| A3 | Basic preprocessing + DDPM | Good diversity, lower fidelity |
+| B2 | Advanced preprocessing + StyleGAN2-ADA | Marginal gains over A2 |
+| B3 | Advanced preprocessing + DDPM | Lowest performance |
+| A4/B4 | Standard augmentation only (no synthetic) | Baseline comparison |
+
+**Key Finding**: Generative architecture choice (GAN vs Diffusion) has a stronger influence on diagnostic performance than preprocessing complexity (Basic vs Advanced).
 
 <p align="center">
   <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="600"/>
   <br>
-  <em>Figure: Grad-CAM saliency maps from ViT-B/16 and ResNet-50 classifiers trained on A2 pipeline (Basic + StyleGAN2-ADA). ResNet-50 produces compact, morphologically aligned activations, while ViT-B/16 shows broader, context-sensitive patterns. Diffusion-augmented samples yield smoother anatomically coherent attention maps.</em>
+  <em>Figure: Grad-CAM visualizations comparing ResNet-50 and ViT-B/16 across different preprocessing pipelines and generative models. ResNet-50 produces compact, lesion-aligned saliency maps, while ViT-B/16 shows broader attention patterns. Synthetic samples exhibit more irregular activations, with ADDF showing the smoothest, most anatomically coherent results.</em>
 </p>
 
 ---
 
 ## Citation
 
-If you find this work useful, please cite our paper:
+If you find this work useful, please cite our paper: (will be updated soon)
 ```bibtex
 @inproceedings{pritam2025skingenbench,
   title={SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis},
   author={Pritam, N. A. Adarsh and O, Jeba Shiney and Jain, Sanyam},
-  booktitle={Proceedings of the International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  booktitle={},
   year={2025},
-  organization={Springer}
+  organization={}
 }
 ```
 ---
