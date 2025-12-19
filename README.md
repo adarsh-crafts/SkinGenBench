@@ -51,7 +51,7 @@ Overall experimental design showing dual preprocessing pipelines, generative mod
 ## 🧠 Overview
 
 <p align="center">
-  <img src="images/overall.png" alt="Methodology Overview" width="600"/>
+  <img src="images/overall.png" alt="Methodology Overview" width="800"/>
   <br>
   <em>Figure: General framework of SkinGenBench showing the two preprocessing pipelines (Basic and Advanced), generative model training (StyleGAN2-ADA and DDPM), and evaluation through image quality metrics and downstream classification tasks.</em>
 </p>
@@ -146,7 +146,7 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 ## Results
 
 <p align="center">
-  <img src="images\t-SNE.png" alt="t-SNE Visualization" width="600"/>
+  <img src="images\t-SNE.png" alt="t-SNE Visualization" width="800"/>
   <br>
   <em>Figure: t-SNE embeddings showing ground truth (GT), StyleGAN2-ADA (GN), and DDPM (DF) distributions for basic (left) and advanced (right) preprocessing pipelines.</em>
 </p>
@@ -228,7 +228,7 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 **Key Finding**: Generative architecture choice (GAN vs Diffusion) has a stronger influence on diagnostic performance than preprocessing complexity (Basic vs Advanced).
 
 <p align="center">
-  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="600"/>
+  <img src="images/gradcam.png" alt="Grad-CAM Visualization" width="800"/>
   <br>
   <em>Figure: Grad-CAM visualizations comparing ResNet-50 and ViT-B/16 across different preprocessing pipelines and generative models. ResNet-50 produces compact, lesion-aligned saliency maps, while ViT-B/16 shows broader attention patterns. Synthetic samples exhibit more irregular activations, with ADDF showing the smoothest, most anatomically coherent results.</em>
 </p>
