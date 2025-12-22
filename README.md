@@ -12,7 +12,7 @@
 
 > 📢 Official PyTorch implementation of **SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis**  
 > N. A. Adarsh Pritam, Jeba Shiney O, Sanyam Jain  
-[[Project]](https://github.com/adarsh-crafts/SkinGenBench) | [[Code]](https://github.com/adarsh-crafts/SkinGenBench)
+[[Paper]](https://arxiv.org/abs/2512.17585) | [[Code]](https://github.com/adarsh-crafts/SkinGenBench)
 ---
 
 ## 🌟 Highlights
@@ -70,7 +70,7 @@ Overall experimental design showing dual preprocessing pipelines, generative mod
 **SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis**  
 N. A. Adarsh Pritam, Jeba Shiney O, Sanyam Jain  
 *Alliance University, Bangalore & Østfold University College, Norway*  
-[[GitHub]](https://github.com/adarsh-crafts/SkinGenBench) | [[PDF]](#add-link-here)
+[[GitHub]](https://github.com/adarsh-crafts/SkinGenBench) | [[PDF]](https://arxiv.org/abs/2512.17585)
 
 ---
 
@@ -237,14 +237,16 @@ Train StyleGAN2-ADA, DDPM and the classifiers with the provided configurations i
 
 ## Citation
 
-If you find this work useful, please cite our paper: (will be updated soon)
+If you find this work useful, please cite our paper:
 ```bibtex
-@inproceedings{pritam2025skingenbench,
-  title={SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis},
-  author={Pritam, N. A. Adarsh and O, Jeba Shiney and Jain, Sanyam},
-  booktitle={},
-  year={2025},
-  organization={}
+@misc{pritam2025skingenbenchgenerativemodelpreprocessing,
+      title={SkinGenBench: Generative Model and Preprocessing Effects for Synthetic Dermoscopic Augmentation in Melanoma Diagnosis}, 
+      author={N. A. Adarsh Pritam and Jeba Shiney O and Sanyam Jain},
+      year={2025},
+      eprint={2512.17585},
+      archivePrefix={arXiv},
+      primaryClass={eess.IV},
+      url={https://arxiv.org/abs/2512.17585}, 
 }
 ```
 ---
